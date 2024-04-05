@@ -3,6 +3,7 @@ const app=express()
 const server=require("http").Server(app)
 app.set("view engine",'ejs')
 app.use(express.static('public'))
+app.use(express.json())
 const {v4:uuidv4}=require("uuid")
 const { ExpressPeerServer } = require("peer");
 
@@ -19,7 +20,7 @@ app.use("/peerjs",peerServer)
 
 var nodeMailer = require('nodemailer')
 const transporter=nodeMailer.createTransport({
-    port:587,
+    port:464,
     host:'smtp.gmail.com',
     auth:{
         user:'korevijay1980@gmail.com',
@@ -39,8 +40,12 @@ app.get("/:room",(req,res)=>{
 })
 
 app.post('/send-mail',(req,res)=>{
+    console.log(req.body)
+    
     const to = req.body.to
     const url = req.body.url
+    console.log(to)
+    console.log(url)
     const mailData = {
         from:'korevijay1980@gmail.com',
         to:to,
